@@ -22,7 +22,7 @@ public class FullScreen : MonoBehaviour
             toggle.isOn = false;
         }
 
-        RevisarResolucion;
+        RevisarResolucion();
     }
 
     // Update is called once per frame
@@ -43,5 +43,30 @@ public class FullScreen : MonoBehaviour
         List<string> opciones = new List<string>();
         int resolucionActual = 0;
 
+        for (int i = 0; i < resoluciones.Length; i++)
+        {
+            string opcion = resoluciones[i].width + " x " + resoluciones[i].height;
+            opciones.Add(opcion);
+
+            if (Screen.fullScreen && resoluciones[i].width == Screen.currentResolution.width &&
+                resoluciones[i].height == Screen.currentResolution.height)
+            {
+                resolucionActual = i;
+            }
+        }
+
+        resolucionesDropDown.AddOptions(opciones);
+        resolucionesDropDown.value = resolucionActual;
+        resolucionesDropDown.RefreshShownValue();
+
+        resolucionesDropDown.value = PlayerPrefs.GetInt("numeroResolucion", 0);
+    }
+
+    public void CambiarResolucion(int indiceResolucion)
+    {
+        PlayerPrefs.SetInt("numeroResolucion", resolucionesDropDown.value);
+        
+        Resolution resolution = resoluciones[indiceResolucion];
+        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
 }
