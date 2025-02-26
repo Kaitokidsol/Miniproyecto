@@ -6,9 +6,12 @@ using Unity.VisualScripting;
 
 public class MovementStateManager : MonoBehaviour
 {
-    public float moveSpeed = 3;
+    public float curretMoveSpeed;
+    public float walkSpeed = 3, walkBackSpeed = 2;
+    public float runSpeed = 7,runBackSpeed = 5;
+    public float crouchSpeed = 2, crouchBackSpeed = 1;
     [HideInInspector] public Vector3 dir;
-    float hzInput, vInput;
+    [HideInInspector] public float hzInput, vInput;
     CharacterController controller;
 
     [SerializeField] float groundYOffset;
@@ -17,10 +20,22 @@ public class MovementStateManager : MonoBehaviour
 
     [SerializeField] float gravity = -9.8f;
     Vector3 velocity;
+
+    MovementBaseState currentState;
+
+    public IdleState Idle = new IdleState();
+    public WalkState Walk = new WalkState();
+    public CrouchState Crouch = new CrouchState();
+    public RunState Run = new RunState();
+
+    [HideInInspector] public Animator anim;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        anim = GetComponentInChildren<Animator>();
         controller = GetComponent<CharacterController>();
+        SwitchState(Idle);
     }
 
     // Update is called once per frame
@@ -28,6 +43,17 @@ public class MovementStateManager : MonoBehaviour
     {
         GetDirectionAndMove();
         Gravity();
+
+        anim.SetFloat("hzInput", hzInput);
+        anim.SetFloat("vInput", vInput);
+
+        currentState.UpdateSate(this);
+    }
+
+    public void SwitchState(MovementBaseState state)
+    {
+        currentState = state;
+        currentState.EnterState(this);
     }
 
     void GetDirectionAndMove()
@@ -37,7 +63,7 @@ public class MovementStateManager : MonoBehaviour
 
         dir = transform.forward * vInput + transform.right * hzInput;    
 
-        controller.Move(dir.normalized * moveSpeed * Time.deltaTime);
+        controller.Move(dir.normalized * curretMoveSpeed * Time.deltaTime);
     }
 
     bool IsGrounded()
