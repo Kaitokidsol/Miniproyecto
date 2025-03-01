@@ -249,7 +249,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 60.000004
+  field of view: 60
   orthographic: 0
   orthographic size: 10
   m_Depth: -1
@@ -391,8 +391,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 243e20db27e173d409ff220876362d08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
+  curretMoveSpeed: 0
+  walkSpeed: 3
+  walkBackSpeed: 2
+  runSpeed: 7
+  runBackSpeed: 5
+  crouchSpeed: 2
+  crouchBackSpeed: 1
   dir: {x: 0, y: 0, z: 0}
+  hzInput: 0
+  vInput: 0
   groundYOffset: 0.6
   groundMask:
     serializedVersion: 2
@@ -439,6 +447,7 @@ Transform:
   m_Children:
   - {fileID: 1681951715}
   - {fileID: 1418767745}
+  - {fileID: 574342640}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &405457166
@@ -455,6 +464,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseSense: 1
   camFollowPos: {fileID: 1681951715}
+  anim: {fileID: 0}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -614,7 +624,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 1681951715}
   m_Follow: {fileID: 1681951715}
   m_Lens:
-    FieldOfView: 60.000004
+    FieldOfView: 60
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -641,12 +651,12 @@ Transform:
   m_GameObject: {fileID: 574342638}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 176.45999, y: 2.88, z: 14.719999}
+  m_LocalPosition: {x: 1.1799927, y: 0.8800001, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 90433154}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 405457165}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &832575517
 GameObject:
@@ -1005,4 +1015,3 @@ SceneRoots:
   - {fileID: 1974033724}
   - {fileID: 1741619115}
   - {fileID: 405457165}
-  - {fileID: 574342640}
