@@ -6,12 +6,16 @@ using Unity.VisualScripting;
 
 public class MovementStateManager : MonoBehaviour
 {
-    public float curretMoveSpeed;
+    [HideInInspector]public float curretMoveSpeed;
+
     public float walkSpeed = 3, walkBackSpeed = 2;
     public float runSpeed = 7,runBackSpeed = 5;
     public float crouchSpeed = 2, crouchBackSpeed = 1;
+    public float airSpeed = 1.5f;
+
     [HideInInspector] public Vector3 dir;
     [HideInInspector] public float hzInput, vInput;
+
     CharacterController controller;
 
     [SerializeField] float groundYOffset;
@@ -19,14 +23,18 @@ public class MovementStateManager : MonoBehaviour
     Vector3 spherePos;
 
     [SerializeField] float gravity = -9.8f;
+    [SerializeField] float jumpForce = 10;
+    [HideInInspector] public bool jumped;
     Vector3 velocity;
 
+    public MovementBaseState previousState;
     MovementBaseState currentState;
 
     public IdleState Idle = new IdleState();
     public WalkState Walk = new WalkState();
     public CrouchState Crouch = new CrouchState();
     public RunState Run = new RunState();
+    public JumpState Jump = new JumpState();
 
     [HideInInspector] public Animator anim;
 
@@ -43,6 +51,7 @@ public class MovementStateManager : MonoBehaviour
     {
         GetDirectionAndMove();
         Gravity();
+        Falling();
 
         anim.SetFloat("hzInput", hzInput);
         anim.SetFloat("vInput", vInput);
@@ -60,13 +69,14 @@ public class MovementStateManager : MonoBehaviour
     {
         hzInput = Input.GetAxis("Horizontal");
         vInput = Input.GetAxis("Vertical");
+        Vector3 airDir = Vector3.zero;
+        if (!IsGrounded()) airDir = transform.forward * vInput + transform.right * hzInput;
+        else dir = transform.forward * vInput + transform.right * hzInput;    
 
-        dir = transform.forward * vInput + transform.right * hzInput;    
-
-        controller.Move(dir.normalized * curretMoveSpeed * Time.deltaTime);
+        controller.Move((dir.normalized * curretMoveSpeed + airDir.normalized * airSpeed) * Time.deltaTime);
     }
 
-    bool IsGrounded()
+    public bool IsGrounded()
     {
         spherePos = new Vector3(transform.position.x, transform.position.y - groundYOffset, transform.position.z);
         if(Physics.CheckSphere(spherePos, controller.radius - 0.05f, groundMask)) return true;
@@ -81,9 +91,9 @@ public class MovementStateManager : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(spherePos, controller.radius - 0.05f);
-    }
+    void Falling() => anim.SetBool("Falling", !IsGrounded());
+
+    public void JumpForce() => velocity.y += jumpForce;
+
+    public void Jumped() => jumped = true;
 }

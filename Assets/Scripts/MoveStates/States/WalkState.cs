@@ -15,6 +15,11 @@ public class WalkState : MovementBaseState
 
         if (movement.vInput < 0) movement.curretMoveSpeed = movement.walkBackSpeed;
         else movement.curretMoveSpeed = movement.walkSpeed;
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            movement.previousState = this;
+            ExitSate(movement, movement.Jump);
+        }
     }
 
     void ExitSate(MovementStateManager movement, MovementBaseState state)
