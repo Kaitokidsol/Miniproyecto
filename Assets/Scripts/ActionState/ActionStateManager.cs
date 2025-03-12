@@ -8,7 +8,7 @@ public class ActionStateManager : MonoBehaviour
     public ReloadState Reload = new ReloadState();
     public DefaultState Default = new DefaultState();
 
-    public GameObject currentWeapon;
+    public WeaponMananger currentWeapon;
     [HideInInspector] public WeaponAmmo ammo;
     AudioSource audioSource;
 
@@ -21,8 +21,6 @@ public class ActionStateManager : MonoBehaviour
     void Start()
     {
         SwitchState(Default);
-        ammo = currentWeapon.GetComponent<WeaponAmmo>();
-        audioSource = currentWeapon.GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
     }
 
@@ -57,5 +55,12 @@ public class ActionStateManager : MonoBehaviour
     public void ReleaseSlide()
     {
         audioSource.PlayOneShot(ammo.releaseSlideSound);
+    }
+
+    public void SetWeapon(WeaponMananger weapon)
+    {
+        currentWeapon = weapon;
+        audioSource = weapon.audioSource;
+        ammo = weapon.ammo;
     }
 }

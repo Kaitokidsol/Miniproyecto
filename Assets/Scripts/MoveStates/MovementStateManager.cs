@@ -78,7 +78,7 @@ public class MovementStateManager : MonoBehaviour
 
     public bool IsGrounded()
     {
-        spherePos = new Vector3(transform.position.x, transform.position.y - groundYOffset, transform.position.z);
+        spherePos = new Vector3(transform.position.x, transform.position.y + controller.radius - 0.08f, transform.position.z);
         if(Physics.CheckSphere(spherePos, controller.radius - 0.05f, groundMask)) return true;
         return false;
     }
@@ -90,6 +90,8 @@ public class MovementStateManager : MonoBehaviour
 
         controller.Move(velocity * Time.deltaTime);
     }
+
+    
 
     void Falling() => anim.SetBool("Falling", !IsGrounded());
 
