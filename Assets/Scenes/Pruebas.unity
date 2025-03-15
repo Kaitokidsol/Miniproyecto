@@ -585,7 +585,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32a9059b9dae26040ba0c918d109e131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentWeapon: {fileID: 7629788928418734662}
+  currentWeapon: {fileID: 6059235071004531746}
   ammo: {fileID: 0}
   anim: {fileID: 0}
   rHandAim: {fileID: 1270866115}
@@ -6174,7 +6174,11 @@ MonoBehaviour:
   bulletsPerShot: 1
   damage: 20
   gunShot: {fileID: 8300000, guid: 8a405e783a8bfe2408f5379165ee1c9c, type: 3}
+  audioSource: {fileID: 0}
+  ammo: {fileID: 0}
   enemyKickbackeForce: 100
+  leftHandTarget: {fileID: 0}
+  leftHandHint: {fileID: 0}
 --- !u!4 &6061549069745119869
 Transform:
   m_ObjectHideFlags: 0

@@ -29,6 +29,7 @@ public class AimStateManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         vCam = GetComponentInChildren<CinemachineVirtualCamera>();
         hipFov = vCam.m_Lens.FieldOfView;
         anim = GetComponent<Animator>();

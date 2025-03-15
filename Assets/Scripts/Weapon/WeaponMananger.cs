@@ -24,6 +24,7 @@ public class WeaponMananger : MonoBehaviour
     public float enemyKickbackeForce = 100;
 
     public Transform leftHandTarget, leftHandHint;
+    WeaponClassManager weaponClass;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -37,9 +38,17 @@ public class WeaponMananger : MonoBehaviour
 
     private void OnEnable()
     {
-        ammo = GetComponent<WeaponAmmo>();
-        recoil = GetComponent<WeaponRecoil>();
-        audioSource = GetComponent<AudioSource>();
+        if (weaponClass == null)
+        {
+            weaponClass = GetComponentInParent<WeaponClassManager>();
+            ammo = GetComponent<WeaponAmmo>();
+            audioSource = GetComponent<AudioSource>();
+            recoil = GetComponent<WeaponRecoil>();
+            recoil.recoilFollowPos = weaponClass.recoilFollowPos;
+            
+        }
+        weaponClass.SetCurrentWeapon(this);
+        
     }
 
     // Update is called once per frame
