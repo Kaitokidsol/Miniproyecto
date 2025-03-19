@@ -18,7 +18,7 @@ ModelImporter:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: portal
-    second: {fileID: 2800000, guid: 65e48b9d066b85e48a60d68ca01c60b9, type: 3}
+    second: {fileID: 2800000, guid: e541e405b01e59e48acb3cb8124ca104, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -36,6 +36,7 @@ public class PlayerStats : MonoBehaviour
         healthBar.SetSlider(currentHealth); // Actualiza la barra de salud
     }
 
+
     private void Update()
     {
         // Se asegura de que la salud nunca sea mayor que la salud máxima
