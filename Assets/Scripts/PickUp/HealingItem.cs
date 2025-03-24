@@ -9,8 +9,14 @@ public class HealingItem : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<PlayerStats>().Heal(healAmount);
-            Destroy(gameObject);
+            PlayerStats playerStats = other.GetComponent<PlayerStats>();
+
+            // Solo cura si la vida no está al máximo
+            if (playerStats.currentHealth < playerStats.maxHealth)
+            {
+                playerStats.Heal(healAmount);
+                Destroy(gameObject);
+            }
         }
     }
 
