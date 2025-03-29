@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class WeaponMananger : MonoBehaviour
 {
@@ -92,5 +92,6 @@ public class WeaponMananger : MonoBehaviour
             Rigidbody rb = currentBullet.GetComponent<Rigidbody>();
             rb.AddForce(barrelPos.forward * bulletVelocity, ForceMode.Impulse);
         }
+        ammo.UpdateAmmoText(); //  Actualiza SOLO el arma activa
     }
 }

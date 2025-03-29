@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
@@ -9,6 +10,9 @@ public class WeaponClassManager : MonoBehaviour
 
     public WeaponMananger[] weapons;
     int currentWeaponIndex;
+
+    [SerializeField] TMP_Text ammoUIText;  // Referencia para la UI de munición
+
 
     private void Awake()
     {
@@ -26,6 +30,9 @@ public class WeaponClassManager : MonoBehaviour
         leftHandIK.data.target = weapon.leftHandTarget;
         leftHandIK.data.hint = weapon.leftHandHint;
         actions.SetWeapon(weapon);
+
+        // Actualizar la UI de munición al cambiar de arma
+        weapon.ammo.SetAmmoUIText(ammoUIText);  // Actualiza la UI con la munición del arma activa
     }
 
     public void ChangeWeapon(float direction)
@@ -42,6 +49,7 @@ public class WeaponClassManager : MonoBehaviour
             else currentWeaponIndex++;
         }
         weapons[currentWeaponIndex].gameObject.SetActive(true);
+        SetCurrentWeapon(weapons[currentWeaponIndex]);
     }
 
     public void WeaponPutAway()

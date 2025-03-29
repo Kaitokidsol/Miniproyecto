@@ -1,4 +1,8 @@
+﻿using Unity.Burst.Intrinsics;
 using UnityEngine;
+using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
+using UnityEngine.Audio;
+using TMPro;
 
 public class WeaponAmmo : MonoBehaviour
 {
@@ -10,35 +14,50 @@ public class WeaponAmmo : MonoBehaviour
     public AudioClip magOutSound;
     public AudioClip releaseSlideSound;
 
+
+    [SerializeField] private TMP_Text ammoUIText; // Referencia al texto de la UI
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         currentAmmo = clipSize;
+
+        // Buscar el objeto AmmoDisplay en el Canvas si no está asignado
+        if (ammoUIText == null)
+        {
+            GameObject textObject = GameObject.Find("AmmoDisplay");
+            if (textObject != null)
+                ammoUIText = textObject.GetComponent<TMP_Text>();
+        }
+
+        UpdateAmmoText(); // Mostrar la munición al iniciar
     }
 
     
 
     public void Reload()
     {
-        if (extraAmmo >= clipSize)
+        if (extraAmmo > 0 && currentAmmo < clipSize)
         {
-            int ammoToReload = clipSize - currentAmmo;
+            int ammoNeeded = clipSize - currentAmmo;
+            int ammoToReload = Mathf.Min(extraAmmo, ammoNeeded);
+
             extraAmmo -= ammoToReload;
             currentAmmo += ammoToReload;
+
+            UpdateAmmoText(); // ✅ Ahora actualiza la UI al recargar
         }
-        else if (extraAmmo > 0)
-        {
-            if (extraAmmo + currentAmmo > clipSize)
-            {
-                int leftOverAmmo = extraAmmo + currentAmmo - clipSize;
-                extraAmmo = leftOverAmmo;
-                currentAmmo = clipSize;
-            }
-            else
-            {
-                currentAmmo += extraAmmo;
-                extraAmmo = 0;
-            }
-        }
+    }
+
+    public void UpdateAmmoText()
+    {
+        if (ammoUIText != null)
+            ammoUIText.text = $"{currentAmmo}/{extraAmmo}";
+    }
+
+    public void SetAmmoUIText(TMP_Text text)
+    {
+        ammoUIText = text;
+        UpdateAmmoText(); // Para actualizar la UI al cambiar de arma
     }
 }
