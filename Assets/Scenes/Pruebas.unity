@@ -5587,6 +5587,7 @@ MonoBehaviour:
   magInSound: {fileID: 0}
   magOutSound: {fileID: 0}
   releaseSlideSound: {fileID: 0}
+  ammoUIText: {fileID: 0}
 --- !u!1 &5338206729644579110
 GameObject:
   m_ObjectHideFlags: 0
@@ -5879,6 +5880,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   isDead: 0
+  tiempoAntesDeDestruir: 2
 --- !u!114 &5728725760130464909
 MonoBehaviour:
   m_ObjectHideFlags: 0

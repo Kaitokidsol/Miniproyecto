@@ -8,6 +8,7 @@ TagManager:
   - Ammo
   - Trap
   - Enemy
+  - WayPoints
   layers:
   - Default
   - TransparentFX
