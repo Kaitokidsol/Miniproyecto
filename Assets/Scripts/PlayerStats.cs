@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -6,6 +7,11 @@ public class PlayerStats : MonoBehaviour
     public float currentHealth;
 
     public HealthBar healthBar; // Referencia a la barra de salud
+
+    public DeathPanelController deathPanelController;
+    public GameObject player;
+
+    private bool isDead = false;
 
     // Al comenzar, inicializamos la salud
     private void Start()
@@ -21,8 +27,18 @@ public class PlayerStats : MonoBehaviour
         if (currentHealth <= 0)
         {
             currentHealth = 0; // Evita que la salud sea negativa
+            deathPanelController.ShowDeathPanel();
+            Die();
         }
         healthBar.SetSlider(currentHealth); // Actualiza la barra de salud
+    }
+
+    void Die()
+    {
+        isDead = true;
+
+        // Desactivar al jugador (el objeto del jugador)
+        player.SetActive(false);
     }
 
     // Método para curar
@@ -35,6 +51,7 @@ public class PlayerStats : MonoBehaviour
         }
         healthBar.SetSlider(currentHealth); // Actualiza la barra de salud
     }
+
 
 
     private void Update()
