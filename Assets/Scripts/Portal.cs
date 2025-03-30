@@ -39,6 +39,9 @@ public class Portal : MonoBehaviour
             else
             {
                 Debug.LogWarning("No se encontró el nivel actual en la lista, cargando MenuVictoria.");
+                // Asegurarse de que el cursor sea visible y libre
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
                 SceneManager.LoadScene("MenuVictoria");
             }
         }
