@@ -39,9 +39,9 @@ public class PauseMenu : MonoBehaviour
             animator.speed = 0f;  // Detiene todas las animaciones
         }
 
-        // Detener el control del cursor
-        Cursor.lockState = CursorLockMode.None; // Desbloquear el cursor
-        Cursor.visible = true; // Hacer visible el cursor
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        UnityEngine.InputSystem.Mouse.current.WarpCursorPosition(new Vector2(Screen.width / 2, Screen.height / 2));
     }
 
     // Método para reanudar el juego
